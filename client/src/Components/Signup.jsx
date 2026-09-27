@@ -15,7 +15,7 @@ function Signup() {
             const response = await fetch("http://localhost:9000/signup", {
                 method: "POST",
                 headers: {
-                    "``ontent-Type": "application/json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({f_name: firstName, l_name: lastName, username: username, password: password})
             });
