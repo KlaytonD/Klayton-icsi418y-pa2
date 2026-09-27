@@ -16,6 +16,51 @@ app.get("/", (req, res) => {
     });
 });
 
+app.post("/signup", async (req, res) => {
+    const { f_name, l_name, username, password } = req.body;
+
+    if (!f_name || !l_name || !username || !password) {
+        return res.status(400).json({
+            message: "Required information is missing"
+        });
+    }
+
+    const db = client.db("pa2");
+    const users = db.collection("users");
+
+    console.log("Signup data recieved:", f_name, l_name, username);
+
+    // Check if user already exists
+    try {
+        const existingUser = await users.findOne({ username });
+        if (existingUser) {
+            return res.status(409).json({
+                message: "Username already exists"
+            });
+        }
+
+        // Insert new user
+        await users.insertOne({
+            f_name,
+            l_name,
+            username,
+            password
+        });
+        res.status(201).json({
+            message: "Signup successful"
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+});
+
+app.post("/login", async (req, res) => {
+    // Handle login logic here
+});
+
 app.listen(9000, () => {
     console.log("Server running on port 9000");
 });
