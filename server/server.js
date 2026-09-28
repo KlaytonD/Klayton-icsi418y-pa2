@@ -28,7 +28,7 @@ app.post("/signup", async (req, res) => {
     const db = client.db("pa2");
     const users = db.collection("users");
 
-    console.log("Signup data recieved:", f_name, l_name, username);
+    console.log("Signup data received:", f_name, l_name, username);
 
     // Check if user already exists
     try {
@@ -74,12 +74,12 @@ app.post("/login", async (req, res) => {
         const user = await users.findOne({ username });
         if(!user) {
             return res.status(401).json({
-                message: "Invalid username or password"
+                message: "Username does not exist"
             });
         }
         if (user.password !== password) {
             return res.status(401).json({
-                message: "Invalid username or password"
+                message: "Incorrect password"
             });
         }
         res.status(200).json({
