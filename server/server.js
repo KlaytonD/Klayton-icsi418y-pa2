@@ -58,7 +58,6 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-    // Handle login logic here
     const { username, password } = req.body;
 
     if (!username || !password) {
